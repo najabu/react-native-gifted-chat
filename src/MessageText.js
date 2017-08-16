@@ -19,6 +19,7 @@ export default class MessageText extends React.Component {
     this.onUrlPress = this.onUrlPress.bind(this);
     this.onPhonePress = this.onPhonePress.bind(this);
     this.onEmailPress = this.onEmailPress.bind(this);
+    this.customDeepLink = null;
   }
 
   onUrlPress(url) {
@@ -61,11 +62,13 @@ export default class MessageText extends React.Component {
   }
 
   render() {
+    this.customDeepLink = /chop-mxp:\/\/.*/;
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
         <ParsedText
           style={[styles[this.props.position].text, this.props.textStyle[this.props.position]]}
           parse={[
+            {pattern: this.customDeepLink, style: StyleSheet.flatten([styles[this.props.position].link, this.props.linkStyle[this.props.position]]), onPress: this.onUrlPress},
             {type: 'url', style: StyleSheet.flatten([styles[this.props.position].link, this.props.linkStyle[this.props.position]]), onPress: this.onUrlPress},
             {type: 'phone', style: StyleSheet.flatten([styles[this.props.position].link, this.props.linkStyle[this.props.position]]), onPress: this.onPhonePress},
             {type: 'email', style: StyleSheet.flatten([styles[this.props.position].link, this.props.linkStyle[this.props.position]]), onPress: this.onEmailPress},
